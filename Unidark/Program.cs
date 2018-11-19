@@ -10,7 +10,7 @@ namespace Unidark
         const byte DarkByte = 0x74;
 
         // Sequence from YT/DarkMental
-        static byte[] SearchBytes => new byte[] { IsReverseMode ? DarkByte : LightByte, 0x08, 0x33, 0xC0, 0x48, 0x83, 0xC4, 0x20, 0x5B, 0xC3, 0x8B, 0x03, 0x48, 0x83, 0xC4, 0x20, 0x5B, 0xC3 };
+        static byte[] SearchBytes => new byte[] { 0x08, 0x33, 0xC0, 0x48, 0x83, 0xC4, 0x20, 0x5B, 0xC3, 0x8B, 0x03, 0x48, 0x83, 0xC4, 0x20, 0x5B, 0xC3 };
 
         static FileStream stream;
 
@@ -53,7 +53,7 @@ namespace Unidark
 
                     if (HashHelper.IsKnownFile(stream, out offset))
                     {
-                        ChangeColorByte(stream, offset);
+                        ChangeThemeByte(stream, offset - 1);
                     }
                     else
                     {
@@ -64,7 +64,7 @@ namespace Unidark
                             offset = stream.GetPositionOf(SearchBytes);
                             if (offset != -1)
                             {
-                                ChangeColorByte(stream, offset);
+                                ChangeThemeByte(stream, offset - 1);
                             }
                             else
                             {
@@ -97,11 +97,11 @@ namespace Unidark
             return header.SequenceEqual(expectedHeader);
         }
 
-        static void ChangeColorByte(FileStream fs, int offset)
+        static void ChangeThemeByte(FileStream fs, int locationOfThemeByte)
         {
             try
             {
-                fs.Position = offset;
+                fs.Position = locationOfThemeByte;
                 fs.WriteByte(IsReverseMode ? LightByte : DarkByte);
 
                 Interop.ShowMessageBox($"Success! {(IsReverseMode ? "Reverted to the light theme!" : "Enjoy the dark theme!")}");
