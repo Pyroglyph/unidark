@@ -8,8 +8,10 @@ namespace Unidark
 {
     public static class HashHelper
     {
+        // This should probably go into a file
         static readonly Dictionary<string, int> _knownHashes = new Dictionary<string, int>
         {
+            {"D22AE3BCE358EFDBC4CF850853C07C4E", 586848}, // 5.6.3p1
             {"A524B969A64304C8E663DBAA24224FD6", 20467872} // 2018.2.16f1
         };
 

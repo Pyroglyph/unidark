@@ -17,7 +17,7 @@ namespace Unidark
             {
                 if (!File.Exists(args[0]))
                 {
-                    FancyConsole.LogError("File does not exist.");
+                    Interop.ShowMessageBox("File does not exist.", MessageBoxType.Error);
                     return;
                 }
 
@@ -27,8 +27,12 @@ namespace Unidark
                 }
                 catch
                 {
-                    FancyConsole.LogError($"Could not open {args[0]}.");
-                    FancyConsole.LogError("Is it running? Do you have permission?");
+                    const string runAsAdminInstructions = @"Otherwise, try and run Unidark as Admin:
+- Right-click on Unidark.exe
+- Click the Compatibility tab
+- Check the 'Run this program as an administrator' box
+- Try again";
+                    Interop.ShowMessageBox($"Could not open {args[0]}.\n\nIf Unity is open, please close it.\n\n{runAsAdminInstructions}", MessageBoxType.Error);
                 }
                 
                 if (stream != null)
@@ -43,7 +47,8 @@ namespace Unidark
                     {
                         if (IsExeFile(stream))
                         {
-                            FancyConsole.Log("Unknown version of Unity, searching for offset...");
+                            Interop.ShowMessageBox($"Searching {Path.GetFileName(args[0])} for the offset. This might take a minute.");
+
                             offset = stream.GetPositionOf(SearchBytes);
                             if (offset != -1)
                             {
@@ -51,12 +56,12 @@ namespace Unidark
                             }
                             else
                             {
-                                FancyConsole.LogError("Offset was not found. This version of Unity is either incompatible or already patched!");
+                                Interop.ShowMessageBox("Offset was not found. This version of Unity is either incompatible or already patched!", MessageBoxType.Error);
                             }
                         }
                         else
                         {
-                            FancyConsole.LogError($"{Path.GetFileName(args[0])} does not seem to be an executable file.");
+                            Interop.ShowMessageBox($"{Path.GetFileName(args[0])} does not seem to be an executable file or is corrupt.", MessageBoxType.Error);
                         }
                     }
 
@@ -65,7 +70,7 @@ namespace Unidark
             }
             else
             {
-                FancyConsole.LogError("An invalid number of arguments were passed. Please drop Unity.exe onto Unidark.exe.");
+                Interop.ShowMessageBox("Unidark does not run on it's own (yet). Please drop Unity.exe onto Unidark.exe.", MessageBoxType.Error);
             }
         }
 
@@ -84,13 +89,12 @@ namespace Unidark
             {
                 fs.Position = offset;
                 fs.WriteByte(0x74);
-                
-                FancyConsole.LogSuccess("Done!");
+
+                Interop.ShowMessageBox("Success! Enjoy the dark theme!");
             }
             catch (Exception e)
             {
-                FancyConsole.LogError("Unable to edit file.");
-                FancyConsole.LogError($"[{e.GetType()}] {e.Message}");
+                Interop.ShowMessageBox($"Unable to edit file.\n\n[{e.GetType()}] {e.Message}", MessageBoxType.Error);
             }
         }
     }

@@ -21,5 +21,5 @@ So, I decided to do something about it. Enter **Unidark**.
 ## To-Do
 
 - [x] Make it work in the first place
-- [ ] Make it more obvious to users when Unidark has succeeded/failed
+- [x] Make it more obvious to users when Unidark has succeeded/failed
 - [ ] Add support for shortcuts that point to Unity.exe rather than just the exe itself
