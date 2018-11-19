@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Data.HashFunction.xxHash;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Unidark
 {
@@ -11,8 +9,8 @@ namespace Unidark
         // This should probably go into a file
         static readonly Dictionary<string, int> _knownHashes = new Dictionary<string, int>
         {
-            {"D22AE3BCE358EFDBC4CF850853C07C4E", 586848}, // 5.6.3p1
-            {"A524B969A64304C8E663DBAA24224FD6", 20467872} // 2018.2.16f1
+            {"BE83B24D", 586848}, // 5.6.3p1
+            // TODO: Convert this to xxHash {"A524B969A64304C8E663DBAA24224FD6", 20467872} // 2018.2.16f1
         };
 
         public static bool IsKnownFile(FileStream stream, out int offset)
@@ -24,11 +22,10 @@ namespace Unidark
         
         static string GetHashString(FileStream fs)
         {
-            byte[] hash;
-            using (var md5 = MD5.Create())
-                hash = md5.ComputeHash(fs);
-
-            return hash.Aggregate(new StringBuilder(32), (sb, b) => sb.Append(b.ToString("X2"))).ToString();
+            var xxHash = xxHashFactory.Instance.Create();
+            var hash = xxHash.ComputeHash(fs);
+            
+            return hash.AsHexString(true);
         }
     }
 }
