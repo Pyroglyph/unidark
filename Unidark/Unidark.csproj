@@ -37,6 +37,16 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.HashFunction.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=80c9288e394c1322, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.HashFunction.Core.2.0.0\lib\net45\System.Data.HashFunction.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.HashFunction.Interfaces, Version=2.0.0.0, Culture=neutral, PublicKeyToken=80c9288e394c1322, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.HashFunction.Interfaces.2.0.0\lib\net45\System.Data.HashFunction.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.HashFunction.xxHash, Version=2.0.0.0, Culture=neutral, PublicKeyToken=80c9288e394c1322, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.HashFunction.xxHash.2.0.0\lib\net45\System.Data.HashFunction.xxHash.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -93,6 +103,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibUnidark\LibUnidark.csproj">
+      <Project>{4bd5f706-3bff-43dd-a5a4-aa91e099484d}</Project>
+      <Name>LibUnidark</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Windows;
+using LibUnidark;
 
 namespace Unidark
 {
@@ -8,6 +11,7 @@ namespace Unidark
         private Stream stream { get; }
 
         public static bool IsComplete { get; set; }
+        public static bool IsReverseMode { get; set; }
 
         public string Status { get; set; }
         public int MainStageProgress { get; set; }
@@ -25,7 +29,9 @@ namespace Unidark
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            
+            LibUnidark.LibUnidark.OnStartOffsetSearch += (_, __) => { Status = "Searching for offset..."; };
+            LibUnidark.LibUnidark.OnComplete += (_, __) => { IsComplete = true; };
+            LibUnidark.LibUnidark.ApplyThemeToStream(stream, IsReverseMode);
         }
     }
 }

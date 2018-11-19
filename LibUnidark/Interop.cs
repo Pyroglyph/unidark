@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Unidark
+namespace LibUnidark
 {
     public static class Interop
     {

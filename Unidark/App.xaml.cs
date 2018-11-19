@@ -26,7 +26,7 @@ namespace Unidark
                 };
 
                 if (dialog.ShowDialog() == true)
-                    stream = dialog.OpenFile();
+                    stream = new FileStream(dialog.FileName, FileMode.Open, FileAccess.ReadWrite);
                 else
                     Environment.Exit(1);
             }
