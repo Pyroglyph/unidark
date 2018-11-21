@@ -23,7 +23,9 @@ namespace Unidark
                 if (Directory.Exists(DEFAULT_UNITY_DIR) && File.Exists(DEFAULT_UNITY_DIR + "\\Unity.exe"))
                 {
                     var result = MessageBox.Show(
-                        "Unity installation detected at " + DEFAULT_UNITY_DIR + "\\Unity.exe\n\nDo you want to patch this? Select Yes to patch, or select No to choose another installation.",
+                        "Unity installation detected at:\n" +
+                        DEFAULT_UNITY_DIR + "\\Unity.exe\n\n" +
+                        "Do you want to patch this? Select Yes to patch, or select No to choose another installation.",
                         "Unidark - Unity installation detected", 
                         MessageBoxButton.YesNoCancel, MessageBoxImage.Question, MessageBoxResult.Yes);
 
