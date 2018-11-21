@@ -12,16 +12,29 @@ So, I decided to do something about it. Enter **Unidark**.
 
 ## How to Use
 
-1. Either [download the latest version](https://github.com/Pyroglyph/unidark/releases) or compile Unidark from source.
-2. Drop your Unity.exe onto Unidark.exe
-3. Wait for Unidark to finish working.
-4. You're done!
+First, either [download the latest version](https://github.com/Pyroglyph/unidark/releases) or compile Unidark from source.
+
+### Method A
+
+1. Open Unidark.exe
+2. Follow the on-screen prompts.
+3. You're done!
+
+### Method B
+
+1. Drop Unity.exe (or a shortcut to it) onto Unidark.exe
+2. Wait for Unidark to complete.
+3. You're done!
 
 
-## Stuff I need to do before releasing
+## Troubleshooting
 
-- [x] Make it work in the first place
-- [x] Make it more obvious to users when Unidark has succeeded/failed
-- [x] Add support for shortcuts that point to Unity.exe rather than just the exe itself
-- [x] Auto-detect if Unity.exe has already been patched (and offer to reverse it)
-- [x] Check for existing Unity installations so you don't have to go hunting by yourself
+If Unidark complains about not being able to open Unity.exe, it probably doesn't have permission to access Unity's folder. Running Unidark as an administrator should solve this:
+
+1. Right-click on Unidark.exe
+2. Click the 'Compatibility' tab.
+3. Check the 'Run this program as an administrator' box.
+4. Click 'OK'.
+5. Try using Unidark again.
+
+Is something else not working right? Are you getting cryptic error messages? [Create an issue](https://github.com/Pyroglyph/unidark/issues/new) about it! Make sure it's reproducible! Make sure to include the version of Unity you're using too, otherwise I won't be able to help.
