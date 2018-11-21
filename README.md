@@ -22,6 +22,6 @@ So, I decided to do something about it. Enter **Unidark**.
 
 - [x] Make it work in the first place
 - [x] Make it more obvious to users when Unidark has succeeded/failed
-- [ ] Add support for shortcuts that point to Unity.exe rather than just the exe itself
+- [x] Add support for shortcuts that point to Unity.exe rather than just the exe itself
 - [x] Auto-detect if Unity.exe has already been patched (and offer to reverse it)
-- [ ] Check for existing Unity installations so you don't have to go hunting by yourself
+- [x] Check for existing Unity installations so you don't have to go hunting by yourself
