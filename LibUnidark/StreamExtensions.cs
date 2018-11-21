@@ -12,6 +12,8 @@ namespace LibUnidark
             if (byteSequence.Length > stream.Length)
                 return -1;
 
+            stream.Position = 0;
+
             var buffer = new byte[byteSequence.Length];
 
             var bufStream = new BufferedStream(stream, byteSequence.Length);
