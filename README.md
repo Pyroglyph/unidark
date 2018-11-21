@@ -18,8 +18,10 @@ So, I decided to do something about it. Enter **Unidark**.
 4. You're done!
 
 
-## To-Do
+## Stuff I need to do before releasing
 
 - [x] Make it work in the first place
 - [x] Make it more obvious to users when Unidark has succeeded/failed
 - [ ] Add support for shortcuts that point to Unity.exe rather than just the exe itself
+- [ ] Auto-detect if Unity.exe has already been patched (and offer to reverse it)
+- [ ] Check for existing Unity installations so you don't have to go hunting by yourself
