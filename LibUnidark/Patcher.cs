@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LibUnidark
 {
-    public static class LibUnidark
+    public static class Patcher
     {
         const byte LightByte = 0x75;
         const byte DarkByte = 0x74;
@@ -14,7 +14,9 @@ namespace LibUnidark
         
         static bool IsReverseMode;
 
-        public static event EventHandler OnStartOffsetSearch;
+        public static event EventHandler OnCalculateHashStart;
+        public static event EventHandler OnOffsetSearchStart;
+        public static event EventHandler OnPatchStart;
         public static event EventHandler<bool> OnComplete;
 
 
@@ -26,6 +28,7 @@ namespace LibUnidark
             {
                 int offset;
 
+                OnCalculateHashStart?.Invoke(null, EventArgs.Empty);
                 if (HashHelper.IsKnownFile(stream, out offset))
                 {
                     ChangeThemeByte(stream, offset - 1);
@@ -34,8 +37,8 @@ namespace LibUnidark
                 {
                     if (IsExeFile(stream))
                     {
-                        OnStartOffsetSearch?.Invoke(null, EventArgs.Empty);
-
+                        OnOffsetSearchStart?.Invoke(null, EventArgs.Empty);
+                        
                         offset = stream.GetPositionOf(SearchBytes);
                         if (offset != -1)
                         {
@@ -67,6 +70,8 @@ namespace LibUnidark
 
         static void ChangeThemeByte(Stream stream, int locationOfThemeByte)
         {
+            OnPatchStart?.Invoke(null, EventArgs.Empty);
+
             stream.Position = locationOfThemeByte;
             stream.WriteByte(IsReverseMode ? LightByte : DarkByte);
 

@@ -10,20 +10,17 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Title="Unidark"
-        Height="100" Width="400"
-        FontSize="14"
-        Loaded="MainWindow_OnLoaded">
+        Height="70" Width="420"
+        Loaded="MainWindow_OnLoaded"
+        Background="#444" BorderBrush="#333" BorderThickness="1">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
-            <RowDefinition />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="{Binding Status}" VerticalContentAlignment="Center" />
-        <ProgressBar Grid.Row="1" Value="{Binding MainStageProgress}" Margin="6 3" />
-        <ProgressBar Grid.Row="2" Value="{Binding CurrentStageProgress}" Margin="6 3" />
-        <Label Grid.Row="0" Grid.RowSpan="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="{Binding SuccessMessageVisibility}" Background="LightGreen">
-            Success!
-        </Label>
+        <Label Grid.Row="0" x:Name="lblStatus" Margin="6 6 6 0"  VerticalContentAlignment="Center" 
+                Foreground="#ccc" FontSize="14" />
+        <ProgressBar Grid.Row="1" x:Name="pbarStage" Margin="6 0 6 6" 
+                Background="#333" BorderBrush="{x:Null}" Foreground="#555"/>
     </Grid>
 </Window>
