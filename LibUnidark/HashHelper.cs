@@ -15,16 +15,25 @@ namespace LibUnidark
 
         public static bool IsKnownFile(Stream stream, out int offset)
         {
-            var hash = GetHashString(stream);
+            try
+            {
+                var hash = GetHashString(stream);
 
-            return _knownHashes.TryGetValue(hash, out offset);
+                return _knownHashes.TryGetValue(hash, out offset);
+            }
+            catch (FileNotFoundException)
+            {
+                // Cannot find the xxHash DLL, might as well pretend the hash is unknown to stop crashes
+                offset = -1;
+                return false;
+            }
         }
         
         static string GetHashString(Stream stream)
         {
             var xxHash = xxHashFactory.Instance.Create();
             var hash = xxHash.ComputeHash(stream);
-            
+
             return hash.AsHexString(true);
         }
     }

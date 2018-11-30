@@ -16,73 +16,83 @@ namespace Unidark
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            Stream stream = null;
-
-            if (!e.Args.Any())
+            try
             {
-                if (Directory.Exists(DEFAULT_UNITY_DIR) && File.Exists(DEFAULT_UNITY_DIR + "\\Unity.exe"))
-                {
-                    var result = MessageBox.Show(
-                        "Unity installation detected at:\n" +
-                        DEFAULT_UNITY_DIR + "\\Unity.exe\n\n" +
-                        "Do you want to patch this? Select Yes to patch, or select No to choose another installation.",
-                        "Unidark - Unity installation detected", 
-                        MessageBoxButton.YesNoCancel, MessageBoxImage.Question, MessageBoxResult.Yes);
+                Stream stream = null;
 
-                    switch (result)
+                if (!e.Args.Any())
+                {
+                    if (Directory.Exists(DEFAULT_UNITY_DIR) && File.Exists(DEFAULT_UNITY_DIR + "\\Unity.exe"))
                     {
-                        case MessageBoxResult.Yes:
-                            stream = TryOpenFile(DEFAULT_UNITY_DIR + "\\Unity.exe");
-                            break;
-                        case MessageBoxResult.No:
-                            stream = OpenFileStreamFromDialog(e.Args);
-                            break;
-                        default:
-                            Environment.Exit(0);
-                            break;
+                        var result = MessageBox.Show(
+                            "Unity installation detected at:\n" +
+                            DEFAULT_UNITY_DIR + "\\Unity.exe\n\n" +
+                            "Do you want to patch this? Select Yes to patch, or select No to choose another installation.",
+                            "Unidark - Unity installation detected",
+                            MessageBoxButton.YesNoCancel, MessageBoxImage.Question, MessageBoxResult.Yes);
+
+                        switch (result)
+                        {
+                            case MessageBoxResult.Yes:
+                                stream = TryOpenFile(DEFAULT_UNITY_DIR + "\\Unity.exe");
+                                break;
+                            case MessageBoxResult.No:
+                                stream = OpenFileStreamFromDialog(e.Args);
+                                break;
+                            default:
+                                Environment.Exit(0);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        stream = OpenFileStreamFromDialog(e.Args);
                     }
                 }
                 else
                 {
-                    stream = OpenFileStreamFromDialog(e.Args);
-                }
-            }
-            else
-            {
-                string exePath = null;
-                try
-                {
-                    if (e.Args.Any(arg => arg.EndsWith(".exe")))
+                    string exePath = null;
+                    try
                     {
-                        exePath = e.Args.Single(arg => arg.EndsWith(".exe"));
-                    }
-                    else if (e.Args.Any(arg => arg.EndsWith(".lnk")))
-                    {
-                        exePath = ResolveLnk(e.Args.Single(arg => arg.EndsWith(".lnk")));
-                        if (exePath == null)
+                        if (e.Args.Any(arg => arg.EndsWith(".exe")))
                         {
-                            ShowFatalError("Invalid link provided.");
-                            return;
+                            exePath = e.Args.Single(arg => arg.EndsWith(".exe"));
+                        }
+                        else if (e.Args.Any(arg => arg.EndsWith(".lnk")))
+                        {
+                            exePath = ResolveLnk(e.Args.Single(arg => arg.EndsWith(".lnk")));
+                            if (exePath == null)
+                            {
+                                ShowFatalError("Invalid link provided.");
+                                return;
+                            }
                         }
                     }
+                    catch
+                    {
+                        ShowFatalError("An executable was not provided.");
+                    }
+
+                    if (exePath != null)
+                        stream = TryOpenFile(exePath);
                 }
-                catch
+
+                if (stream != null)
                 {
-                    ShowFatalError("An exectable was not provided.");
+                    var mainWindow = new MainWindow(stream);
+                    mainWindow.Show();
                 }
-
-                if (exePath != null)
-                    stream = TryOpenFile(exePath);
+                else
+                {
+                    ShowFatalError("Something has gone very very wrong!");
+                }
             }
+            catch (Exception ex)
+            {
+                ShowFatalError($@"Something has gone wrong and Unidark was unable to recover.
+                    Please pass on the following message to the developer:
 
-            if (stream != null)
-            {
-                var mainWindow = new MainWindow(stream);
-                mainWindow.Show();
-            }
-            else
-            {
-                ShowFatalError("Something has gone very very wrong!");
+                    {ex.Message}");
             }
         }
 
