@@ -37,4 +37,4 @@ If Unidark complains about not being able to open Unity.exe, it probably doesn't
 4. Click 'OK'.
 5. Try using Unidark again.
 
-Is something else not working right? Are you getting cryptic error messages? [Create an issue](https://github.com/Pyroglyph/unidark/issues/new) about it! Make sure it's reproducible! Make sure to include the version of Unity you're using too, otherwise I won't be able to help.
+Is something else not working right? Are you getting cryptic error messages? [Create an issue](https://github.com/Pyroglyph/unidark/issues/new) about it! Make sure it's reproducible and remember to include the version of Unity you're using, otherwise I won't be able to help.
