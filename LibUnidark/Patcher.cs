@@ -31,7 +31,7 @@ namespace LibUnidark
                 throw new OffsetNotFoundException();
             }
 
-            return offset;
+            return offset - 1;
         }
 
         public static bool IsAlreadyPatched(Stream stream)
@@ -43,7 +43,7 @@ namespace LibUnidark
                 offset = FindThemeByteOffset(stream);
             }
 
-            ThemeByteOffset = offset - 1;
+            ThemeByteOffset = offset;
 
             stream.Position = ThemeByteOffset;
             var themeByte = Convert.ToByte(stream.ReadByte());
