@@ -1,0 +1,8 @@
+[package]
+name = "unidark"
+version = "0.1.0"
+authors = ["Pyroglyph"]
+edition = "2018"
+
+[dependencies]
+subslice = "0.2.2"
